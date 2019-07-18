@@ -23,10 +23,10 @@
     src: "limits.conf"
     dest: "/etc/security/limits.conf"
 
-- name: "Install Conda"
-  include_tasks: "conda.yml"
+# - name: "Install Conda"
+#   include_tasks: "conda.yml"
 
-- name: "Install ArcPy"
-  shell: "source /opt/conda/etc/profile.d/conda.sh && conda install -c esri arcgis-server-10.6-py3"
-  args:
-    executable: "/bin/bash"
+# - name: "Install ArcPy"
+#   shell: "source /opt/conda/etc/profile.d/conda.sh && conda install -c esri arcgis-server-10.6-py3"
+#   args:
+#     executable: "/bin/bash"
