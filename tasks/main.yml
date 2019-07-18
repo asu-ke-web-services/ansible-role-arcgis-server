@@ -1,0 +1,32 @@
+---
+- name: "Install Dependencies"
+  apt:
+    name: "{{ packages }}"
+    state: "present"
+  vars:
+    packages:
+      - "gettext"
+      - "python3-psycopg2"
+
+- name: "Create ArcGIS User"
+  user:
+    name:        "{{ arcgis_system_user }}"
+    comment:     "ArcGIS System User"
+    shell:       "/bin/bash"
+    state:       "present"
+    create_home: "yes"
+    home:        "/home/arcgis"
+# We are not setting the password here, as we do not know the crypted value
+
+- name: "Set resource limits for ArcGIS"
+  template:
+    src: "limits.conf"
+    dest: "/etc/security/limits.conf"
+
+- name: "Install Conda"
+  include_tasks: "conda.yml"
+
+- name: "Install ArcPy"
+  shell: "source /opt/conda/etc/profile.d/conda.sh && conda install -c esri arcgis-server-10.6-py3"
+  args:
+    executable: "/bin/bash"
